@@ -38,6 +38,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
   }
 }
 
+
 resource "aws_s3_bucket" "logs" {
   bucket = "creditflow-logs"
 }
