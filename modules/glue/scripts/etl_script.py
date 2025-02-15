@@ -37,4 +37,4 @@ glueContext.write_dynamic_frame.from_options(
 )
 
 
-print("ETL Finalizado com Sucesso!")
+printsa("ETL Finalizado com Sucesso!")
