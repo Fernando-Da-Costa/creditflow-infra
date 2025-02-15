@@ -8,6 +8,19 @@ resource "aws_s3_bucket" "buckets" {
   }
 }
 
+resource "aws_s3_object" "create_folder" {
+  bucket  = aws_s3_bucket.buckets["creditflow-bronze"].id
+  key     = "scripts/"
+  content = ""
+}
+
+resource "aws_s3_object" "etl_script" {
+  bucket = aws_s3_bucket.buckets["creditflow-bronze"].id
+  key    = "scripts/etl_script.py"
+  source = "C:/Projetos/creditflow-infra/modules/glue/scripts/etl_script.py"
+}
+
+
 resource "aws_s3_bucket_logging" "logging" {
   for_each = toset(var.bucket_names)
   bucket = aws_s3_bucket.buckets[each.key].id
@@ -42,3 +55,5 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
 resource "aws_s3_bucket" "logs" {
   bucket = "creditflow-logs"
 }
+
+
