@@ -36,4 +36,5 @@ glueContext.write_dynamic_frame.from_options(
     format="parquet"
 )
 
+
 print("ETL Finalizado com Sucesso!")
