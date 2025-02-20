@@ -1,1 +1,3 @@
 boto3
+apache-airflow-providers-amazon
+apache-airflow-providers-slack

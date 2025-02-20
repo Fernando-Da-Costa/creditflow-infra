@@ -1,12 +1,16 @@
+module "iam" {
+  source = "../../modules/iam"
+}
+
 resource "aws_glue_catalog_database" "creditflow_db" {
   name = var.database_name
 }
 
 resource "aws_glue_crawler" "creditflow_crawler" {
-  name          = var.crawler_name
-  role          = aws_iam_role.glue_role.arn
-  database_name = aws_glue_catalog_database.creditflow_db.name
-  table_prefix  = var.table_prefix
+  name          =   var.crawler_name
+  role          =   module.iam.glue_role_arn
+  database_name =   aws_glue_catalog_database.creditflow_db.name
+  table_prefix  =   var.table_prefix
 
   s3_target {
     path = "s3://${var.s3_bucket}/bronze/"
@@ -15,7 +19,7 @@ resource "aws_glue_crawler" "creditflow_crawler" {
 
 resource "aws_glue_job" "creditflow_etl" {
   name     = var.job_name
-  role_arn = aws_iam_role.glue_role.arn
+  role_arn =  module.iam.glue_role_arn
 
   command {
     script_location = "s3://${var.s3_bucket}/scripts/etl_script.py"
@@ -43,43 +47,50 @@ resource "aws_glue_job" "creditflow_etl" {
 }
 
 
-resource "aws_iam_role" "glue_role" {
-  name               = "GlueS3AccessRole"
-  assume_role_policy = data.aws_iam_policy_document.glue_assume_role.json
-}
+#2. Criar os Crawlers → Para mapear os dados do S3 e atualizar o Glue Catalog.
+resource "aws_glue_crawler" "bronze_crawler" {
+  name          = "creditflow_bronze_crawler"
+  database_name = aws_glue_catalog_database.creditflow_db.name
+  role          = module.iam.glue_role_arn
 
-data "aws_iam_policy_document" "glue_assume_role" {
-  statement {
-    actions = [
-      "sts:AssumeRole",
-    ]
-    principals {
-      type        = "Service"
-      identifiers = ["glue.amazonaws.com"]
-    }
+  s3_target {
+    path = "s3://creditflow-bronze/"
   }
+
+  schedule = "cron(0 * * * ? *)"  # Executa a cada hora
 }
 
-resource "aws_iam_role_policy_attachment" "glue_s3_access" {
-  role       = aws_iam_role.glue_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-}
+resource "aws_glue_crawler" "silver_crawler" {
+  name          =   "creditflow_silver_crawler"
+  database_name =   aws_glue_catalog_database.creditflow_db.name
+  role          =   module.iam.glue_role_arn
 
-data "aws_iam_policy_document" "glue_policy" {
-  statement {
-    actions = [
-      "logs:CreateLogGroup",
-      "logs:CreateLogStream",
-      "logs:PutLogEvents",
-      "cloudwatch:PutMetricData"
-    ]
-    resources = ["arn:aws:logs:*:*:*", "arn:aws:cloudwatch:*:*:*"]
+  s3_target {
+    path = "s3://creditflow-silver/"
   }
+
+  schedule = "cron(0 * * * ? *)"  # Executa a cada hora
 }
 
-resource "aws_iam_role_policy" "glue_policy_attachment" {
-  name   = "GlueCloudWatchPolicy"
-  role   = aws_iam_role.glue_role.id
-  policy = data.aws_iam_policy_document.glue_policy.json
+#3. Criar os Jobs → Para processar e transformar os dados.
+resource "aws_glue_job" "bronze_to_silver" {
+  name     = "bronze_to_silver"
+  role_arn =  module.iam.glue_role_arn
+
+  command {
+    script_location = "s3://creditflow-scripts/bronze_to_silver.py"
+    python_version  = "3"
+  }
+
+  default_arguments = {
+    "--TempDir"                = "s3://creditflow-temp/"
+    "--enable-metrics"         = "true"
+    "--job-bookmark-option"    = "job-bookmark-enable"
+  }
+
+  glue_version = "3.0"
+  worker_type  = "G.1X"
+  number_of_workers = 2
 }
+
 

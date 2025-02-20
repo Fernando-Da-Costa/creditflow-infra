@@ -47,8 +47,10 @@ module "glue" {
 
 ##########################################################################################################################
 # Chama o módulo cloudwatch
-
 module "cloudwatch" {
   source = "./modules/cloudwatch"
-  # Adicione as variáveis necessárias
 }
+
+
+
+

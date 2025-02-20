@@ -14,7 +14,8 @@ output "glue_job_name" {
 }
 
 output "glue_role_arn" {
-  value   = aws_iam_role.glue_role.arn
+  value   = module.iam.glue_role_arn
 }
+
 
 

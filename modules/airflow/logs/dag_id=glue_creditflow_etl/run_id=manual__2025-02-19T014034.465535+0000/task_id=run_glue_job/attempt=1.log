@@ -1,0 +1,120 @@
+[2025-02-19T01:40:37.188+0000] {local_task_job_runner.py:123} INFO - ::group::Pre task execution logs
+[2025-02-19T01:40:37.206+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: glue_creditflow_etl.run_glue_job manual__2025-02-19T01:40:34.465535+00:00 [queued]>
+[2025-02-19T01:40:37.217+0000] {taskinstance.py:2614} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: glue_creditflow_etl.run_glue_job manual__2025-02-19T01:40:34.465535+00:00 [queued]>
+[2025-02-19T01:40:37.218+0000] {taskinstance.py:2867} INFO - Starting attempt 1 of 4
+[2025-02-19T01:40:37.234+0000] {taskinstance.py:2890} INFO - Executing <Task(GlueJobOperator): run_glue_job> on 2025-02-19 01:40:34.465535+00:00
+[2025-02-19T01:40:37.242+0000] {warnings.py:112} WARNING - /home/***/.local/lib/python3.12/site-packages/***/task/task_runner/standard_task_runner.py:70: DeprecationWarning: This process (pid=1032) is multi-threaded, use of fork() may lead to deadlocks in the child.
+  pid = os.fork()
+
+[2025-02-19T01:40:37.244+0000] {standard_task_runner.py:72} INFO - Started process 1034 to run task
+[2025-02-19T01:40:37.245+0000] {standard_task_runner.py:104} INFO - Running: ['***', 'tasks', 'run', 'glue_creditflow_etl', 'run_glue_job', 'manual__2025-02-19T01:40:34.465535+00:00', '--job-id', '10', '--raw', '--subdir', 'DAGS_FOLDER/glue_creditflow_dag.py', '--cfg-path', '/tmp/tmp_bswamol']
+[2025-02-19T01:40:37.246+0000] {standard_task_runner.py:105} INFO - Job 10: Subtask run_glue_job
+[2025-02-19T01:40:37.300+0000] {task_command.py:467} INFO - Running <TaskInstance: glue_creditflow_etl.run_glue_job manual__2025-02-19T01:40:34.465535+00:00 [running]> on host 22bdefdf8d0b
+[2025-02-19T01:40:37.402+0000] {taskinstance.py:3134} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='glue_creditflow_etl' AIRFLOW_CTX_TASK_ID='run_glue_job' AIRFLOW_CTX_EXECUTION_DATE='2025-02-19T01:40:34.465535+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2025-02-19T01:40:34.465535+00:00'
+[2025-02-19T01:40:37.404+0000] {logging_mixin.py:190} INFO - Task instance is in running state
+[2025-02-19T01:40:37.404+0000] {logging_mixin.py:190} INFO -  Previous state of the Task instance: queued
+[2025-02-19T01:40:37.405+0000] {logging_mixin.py:190} INFO - Current task name:run_glue_job state:running start_date:2025-02-19 01:40:37.207364+00:00
+[2025-02-19T01:40:37.406+0000] {logging_mixin.py:190} INFO - Dag name:glue_creditflow_etl and current dag run status:running
+[2025-02-19T01:40:37.406+0000] {taskinstance.py:732} INFO - ::endgroup::
+[2025-02-19T01:40:37.407+0000] {glue.py:196} INFO - Initializing AWS Glue Job: creditflow_etl_job. Wait for completion: True
+[2025-02-19T01:40:37.408+0000] {glue.py:369} INFO - Checking if job already exists: creditflow_etl_job
+[2025-02-19T01:40:37.418+0000] {base.py:84} INFO - Retrieving connection 'aws_default'
+[2025-02-19T01:40:37.419+0000] {connection_wrapper.py:325} INFO - AWS Connection (conn_id='aws_default', conn_type='aws') credentials retrieved from login and password.
+[2025-02-19T01:40:38.194+0000] {glue.py:217} INFO - You can monitor this Glue Job run at: https://console.aws.amazon.com/gluestudio/home?region=sa-east-1#/job/creditflow_etl_job/run/jr_bfc2f0027411abc1950c977a5be2ac2211c0ea11b7368a0827c5b7a7d0c5bd02
+[2025-02-19T01:40:38.257+0000] {glue.py:352} INFO - Polling for AWS Glue Job creditflow_etl_job current run state with status RUNNING
+[2025-02-19T01:40:44.350+0000] {glue.py:352} INFO - Polling for AWS Glue Job creditflow_etl_job current run state with status RUNNING
+[2025-02-19T01:40:50.419+0000] {glue.py:352} INFO - Polling for AWS Glue Job creditflow_etl_job current run state with status RUNNING
+[2025-02-19T01:40:56.481+0000] {glue.py:352} INFO - Polling for AWS Glue Job creditflow_etl_job current run state with status RUNNING
+[2025-02-19T01:41:02.573+0000] {glue.py:352} INFO - Polling for AWS Glue Job creditflow_etl_job current run state with status RUNNING
+[2025-02-19T01:41:08.515+0000] {glue.py:352} INFO - Polling for AWS Glue Job creditflow_etl_job current run state with status RUNNING
+[2025-02-19T01:41:14.615+0000] {glue.py:352} INFO - Polling for AWS Glue Job creditflow_etl_job current run state with status RUNNING
+[2025-02-19T01:41:20.704+0000] {glue.py:352} INFO - Polling for AWS Glue Job creditflow_etl_job current run state with status RUNNING
+[2025-02-19T01:41:26.819+0000] {glue.py:352} INFO - Polling for AWS Glue Job creditflow_etl_job current run state with status RUNNING
+[2025-02-19T01:41:32.879+0000] {glue.py:349} INFO - Exiting Job jr_bfc2f0027411abc1950c977a5be2ac2211c0ea11b7368a0827c5b7a7d0c5bd02 Run State: FAILED
+[2025-02-19T01:41:32.890+0000] {taskinstance.py:3313} ERROR - Task failed with exception
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/operators/glue.py", line 231, in execute
+    glue_job_run = self.glue_job_hook.job_completion(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/hooks/glue.py", line 300, in job_completion
+    ret = self._handle_state(job_run_state, job_name, run_id, verbose, next_log_tokens)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/hooks/glue.py", line 350, in _handle_state
+    raise AirflowException(job_error_message)
+airflow.exceptions.AirflowException: Exiting Job jr_bfc2f0027411abc1950c977a5be2ac2211c0ea11b7368a0827c5b7a7d0c5bd02 Run State: FAILED
+[2025-02-19T01:41:32.897+0000] {logging_mixin.py:190} INFO - Task instance in failure state
+[2025-02-19T01:41:32.898+0000] {logging_mixin.py:190} INFO - Task start:2025-02-19 01:40:37.207364+00:00 end:2025-02-19 01:41:32.897119+00:00 duration:55.689755
+[2025-02-19T01:41:32.898+0000] {logging_mixin.py:190} INFO - Task:<Task(GlueJobOperator): run_glue_job> dag:<DAG: glue_creditflow_etl> dagrun:<DagRun glue_creditflow_etl @ 2025-02-19 01:40:34.465535+00:00: manual__2025-02-19T01:40:34.465535+00:00, state:running, queued_at: 2025-02-19 01:40:34.479168+00:00. externally triggered: True>
+[2025-02-19T01:41:32.899+0000] {logging_mixin.py:190} INFO - Failure caused by Exiting Job jr_bfc2f0027411abc1950c977a5be2ac2211c0ea11b7368a0827c5b7a7d0c5bd02 Run State: FAILED
+[2025-02-19T01:41:32.899+0000] {taskinstance.py:1226} INFO - Marking task as UP_FOR_RETRY. dag_id=glue_creditflow_etl, task_id=run_glue_job, run_id=manual__2025-02-19T01:40:34.465535+00:00, execution_date=20250219T014034, start_date=20250219T014037, end_date=20250219T014132
+[2025-02-19T01:41:32.939+0000] {taskinstance.py:341} INFO - ::group::Post task execution logs
+[2025-02-19T01:41:32.940+0000] {standard_task_runner.py:124} ERROR - Failed to execute job 10 for task run_glue_job (Exiting Job jr_bfc2f0027411abc1950c977a5be2ac2211c0ea11b7368a0827c5b7a7d0c5bd02 Run State: FAILED; 1034)
+Traceback (most recent call last):
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/task/task_runner/standard_task_runner.py", line 117, in _start_by_fork
+    ret = args.func(args, dag=self.dag)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/cli_config.py", line 49, in command
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/cli.py", line 116, in wrapper
+    return f(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 483, in task_run
+    task_return_code = _run_task_by_selected_method(args, _dag, ti)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 256, in _run_task_by_selected_method
+    return _run_raw_task(args, ti)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/cli/commands/task_command.py", line 341, in _run_raw_task
+    return ti._run_raw_task(
+           ^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/session.py", line 97, in wrapper
+    return func(*args, session=session, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3006, in _run_raw_task
+    return _run_raw_task(
+           ^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 274, in _run_raw_task
+    TaskInstance._execute_task_with_callbacks(
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3161, in _execute_task_with_callbacks
+    result = self._execute_task(context, task_orig)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 3185, in _execute_task
+    return _execute_task(self, context, task_orig)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 768, in _execute_task
+    result = _execute_callable(context=context, **execute_callable_kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/taskinstance.py", line 734, in _execute_callable
+    return ExecutionCallableRunner(
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/utils/operator_helpers.py", line 252, in run
+    return self.func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/models/baseoperator.py", line 424, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/operators/glue.py", line 231, in execute
+    glue_job_run = self.glue_job_hook.job_completion(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/hooks/glue.py", line 300, in job_completion
+    ret = self._handle_state(job_run_state, job_name, run_id, verbose, next_log_tokens)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/airflow/.local/lib/python3.12/site-packages/airflow/providers/amazon/aws/hooks/glue.py", line 350, in _handle_state
+    raise AirflowException(job_error_message)
+airflow.exceptions.AirflowException: Exiting Job jr_bfc2f0027411abc1950c977a5be2ac2211c0ea11b7368a0827c5b7a7d0c5bd02 Run State: FAILED
+[2025-02-19T01:41:32.969+0000] {local_task_job_runner.py:266} INFO - Task exited with return code 1
+[2025-02-19T01:41:32.993+0000] {taskinstance.py:3901} INFO - 0 downstream tasks scheduled from follow-on schedule check
+[2025-02-19T01:41:32.996+0000] {local_task_job_runner.py:245} INFO - ::endgroup::
