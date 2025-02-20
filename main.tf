@@ -51,6 +51,13 @@ module "cloudwatch" {
   source = "./modules/cloudwatch"
 }
 
+##########################################################################################################################
+# Chama o módulo Athena
+module "athena" {
+  source = "./modules/athena"
+}
+
+
 
 
 
