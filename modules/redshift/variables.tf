@@ -45,3 +45,15 @@ variable "environment" {
   type        = string
   default     = "dev"
 }
+
+
+###################################### Subnets#########################################################################
+variable "subnet_ids" {
+  description = "Lista de subnets da VPC"
+  type        = list(string)
+}
+
+variable "vpc_id" {
+  description = "ID da VPC"
+  type        = string
+}

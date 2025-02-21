@@ -9,6 +9,9 @@ resource "aws_redshift_cluster" "creditflow" {
   publicly_accessible       = false
   encrypted                 = true
   iam_roles                 = [aws_iam_role.redshift_role.arn]
+  cluster_subnet_group_name = aws_redshift_subnet_group.redshift_subnet.name    # verificar depois
+  vpc_security_group_ids    = [aws_security_group.redshift_sg.id]               # verificar depois
+
 
   tags = {
     Name        = var.cluster_identifier
@@ -35,3 +38,50 @@ resource "aws_iam_role_policy_attachment" "redshift_s3_access" {
   role       = aws_iam_role.redshift_role.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
 }
+
+################################Permissão para Glue Catalog (se necessário)############################################
+resource "aws_iam_role_policy_attachment" "redshift_glue_access" {
+  role       = aws_iam_role.redshift_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AWSGlueConsoleFullAccess"
+}
+
+################################ Segurança e Networking VPC e Subnet Group############################################
+resource "aws_redshift_subnet_group" "redshift_subnet" {
+  name       = "redshift-subnet-group"
+  subnet_ids = var.subnet_ids  # Lista de subnets da VPC
+
+  tags = {
+    Name = "Redshift Subnet Group"
+  }
+}
+
+################################ Grupo de Segurança (Security Group - SG)##############################################
+resource "aws_security_group" "redshift_sg" {
+  vpc_id = var.vpc_id
+
+  ingress {
+    from_port   = 5439
+    to_port     = 5439
+    protocol    = "tcp"
+    cidr_blocks = ["127.0.0.1/32"]  # Ou a rede que pode acessar
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
+
+
+################################ Integração com o S3 (COPY e UNLOAD)##################################################
+resource "aws_iam_role_policy_attachment" "redshift_s3_full_access" {
+  role       = aws_iam_role.redshift_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+}
+
+
+
+
+

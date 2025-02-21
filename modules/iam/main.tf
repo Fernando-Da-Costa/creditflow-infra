@@ -123,10 +123,45 @@ resource "aws_iam_policy" "athena_s3_policy" {
   })
 }
 
-#Associar a um Usuário.
+############################################## Associar a um Usuário.##################################################
 resource "aws_iam_user_policy_attachment" "user_policy_attachment" {
   user       = "terraform"
   policy_arn = aws_iam_policy.athena_s3_policy.arn
 }
+
+############################################## Permissões da Lambda.###################################################
+resource "aws_iam_role" "lambda_role" {
+  name               = "lambda_redshift_s3_role"
+  assume_role_policy = data.aws_iam_policy_document.lambda_assume_role.json
+}
+
+data "aws_iam_policy_document" "lambda_assume_role" {
+  statement {
+    actions = ["sts:AssumeRole"]
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_s3_access" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonS3ReadOnlyAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_redshift_access" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonRedshiftDataFullAccess"
+}
+
+resource "aws_iam_role_policy_attachment" "lambda_cloudwatch_logs" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
+}
+
+
+
+
 
 

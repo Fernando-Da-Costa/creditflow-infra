@@ -28,6 +28,34 @@ resource "aws_s3_bucket_logging" "logging" {
   target_prefix = "${each.value}/logs/"
 }
 
+
+############################################################ esvaziar o bucket.#########################################
+# locals {
+#   s3_keys = [
+#     "result_consulta_athena/",
+#     # adicione todas as chaves de objetos que precisam ser removidas
+#   ]
+# }
+#
+# resource "aws_s3_object" "clear_bucket" {
+#   for_each = {
+#     for key in local.s3_keys : key => key
+#   }
+#   bucket = "bucket-athena-query-results-fernando"
+#   key    = each.key
+# }
+#
+#
+# resource "aws_athena_workgroup" "workgroup_creditflow" {
+#   name = "workgroup_creditflow"
+#   # configurações adicionais
+#   lifecycle {
+#     prevent_destroy = false
+#   }
+# }
+############################################################ esvaziar o bucket.#########################################
+
+
 # Bucket para armazenar as consultas do athena
 resource "aws_s3_bucket" "bucket_athena_query_results" {
   bucket = "bucket-athena-query-results-fernando"
@@ -70,5 +98,7 @@ resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
 resource "aws_s3_bucket" "logs" {
   bucket = "creditflow-logs"
 }
+
+
 
 
