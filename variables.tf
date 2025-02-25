@@ -44,7 +44,6 @@ variable "environment" {
 
 
 ########################################################################################################################
-
 variable "glue_job_name" {
   description = "Nome do job no AWS Glue"
   type        = string
@@ -91,3 +90,4 @@ variable "s3_bucket" {
 #   description = "Ambiente de deploy"
 #   type        = string
 # }
+

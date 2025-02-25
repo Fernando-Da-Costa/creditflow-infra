@@ -11,7 +11,7 @@ resource "aws_redshift_cluster" "creditflow" {
   iam_roles                 = [aws_iam_role.redshift_role.arn]
   cluster_subnet_group_name = aws_redshift_subnet_group.redshift_subnet.name    # verificar depois
   vpc_security_group_ids    = [aws_security_group.redshift_sg.id]               # verificar depois
-
+  vpc_id = var.vpc_id
 
   tags = {
     Name        = var.cluster_identifier

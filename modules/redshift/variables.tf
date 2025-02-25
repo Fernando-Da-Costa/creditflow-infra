@@ -19,7 +19,7 @@ variable "master_username" {
 variable "master_password" {
   description = "Senha do usuário master"
   type        = string
-  sensitive   = true
+  sensitive   = false
 }
 
 variable "node_type" {

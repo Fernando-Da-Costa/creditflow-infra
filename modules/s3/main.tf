@@ -29,48 +29,6 @@ resource "aws_s3_bucket_logging" "logging" {
 }
 
 
-############################################################ esvaziar o bucket.#########################################
-# locals {
-#   s3_keys = [
-#     "result_consulta_athena/",
-#     # adicione todas as chaves de objetos que precisam ser removidas
-#   ]
-# }
-#
-# resource "aws_s3_object" "clear_bucket" {
-#   for_each = {
-#     for key in local.s3_keys : key => key
-#   }
-#   bucket = "bucket-athena-query-results-fernando"
-#   key    = each.key
-# }
-#
-#
-# resource "aws_athena_workgroup" "workgroup_creditflow" {
-#   name = "workgroup_creditflow"
-#   # configurações adicionais
-#   lifecycle {
-#     prevent_destroy = false
-#   }
-# }
-############################################################ esvaziar o bucket.#########################################
-
-
-# Bucket para armazenar as consultas do athena
-resource "aws_s3_bucket" "bucket_athena_query_results" {
-  bucket = "bucket-athena-query-results-fernando"
-  tags = {
-    Name        = "Armazena resultado das consultas no athena."
-    Environment = "Dev"
-  }
-}
-resource "aws_s3_object" "create_folder_athena" {
-  bucket  = "bucket-athena-query-results-fernando"
-  key     = "result_consulta_athena/"
-  content = ""
-}
-
-
 
 resource "aws_s3_bucket_versioning" "versioning" {
   for_each = toset(var.bucket_names)
@@ -82,7 +40,8 @@ resource "aws_s3_bucket_versioning" "versioning" {
 }
 
 resource "aws_s3_bucket_lifecycle_configuration" "lifecycle" {
-  for_each = toset(var.bucket_names)
+  #for_each = toset(var.bucket_names)
+  for_each = toset([for name in var.bucket_names : name if name != "bucket-athena-query-results-fernando"])
   bucket = aws_s3_bucket.buckets[each.key].id
 
   rule {
@@ -99,6 +58,26 @@ resource "aws_s3_bucket" "logs" {
   bucket = "creditflow-logs"
 }
 
+resource "null_resource" "delete_s3_folder" {
+  provisioner "local-exec" {
+    command = "aws s3 rm s3://bucket-athena-query-results-fernando/teste --recursive"
+  }
 
+  triggers = {
+    always_run = "${timestamp()}"
+  }
+}
+
+resource "aws_s3_object" "create_folder_athena" {
+  bucket  = aws_s3_bucket.buckets["bucket-athena-query-results-fernando"].id
+  key     = "result_consulta_athena/"
+  content = ""
+}
+
+resource "aws_s3_object" "create_folder_bronze" {
+  bucket  = aws_s3_bucket.buckets["bucket-athena-query-results-fernando"].id
+  key     = "bronze/"
+  content = ""
+}
 
 
